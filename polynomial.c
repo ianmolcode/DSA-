@@ -44,6 +44,64 @@ struct node* create(struct node* head)
      } 
      return head ; 
 }
+void print(struct node* head)
+{
+    if(head==NULL)
+    {
+        printf("No polynomial") ; 
+    }
+    else{
+        struct node* temp = head ; 
+        while(temp!=NULL)
+        {
+        printf("%.1fx^%d" ,temp->coeff , temp->expo) ; 
+        temp=temp->link ;  
+        if(temp!=NULL)
+        printf(" + ") ;
+        else
+        printf("\n") ; 
+        }
+    }
+}
+void polyAdd(struct node* head1 , struct node* head2) 
+{
+    struct node* ptr1 =head1 ; 
+    struct node* ptr2 =head2 ; 
+    struct node* head3 =NULL ; 
+    while(ptr1!=NULL && ptr2!=NULL) 
+    {
+        if(ptr1->expo == ptr2->expo) 
+        {
+             head3=insert(head3,ptr1->coeff+ptr2->coeff , ptr1->expo) ;
+            ptr1=ptr1->link;
+            ptr2=ptr2->link ; 
+        }
+        else if(ptr1->expo > ptr2->expo)
+        {
+            head3 =insert(head3,ptr1->coeff , ptr1->expo) ;
+            ptr1=ptr1->link ; 
+        }
+            else if(ptr1->expo < ptr2->expo)
+        {
+            head3 =insert(head3,ptr2->coeff , ptr2->expo) ;
+            ptr2=ptr2->link ; 
+        }
+
+    }
+    while(ptr1!=NULL)
+    {
+       head3 =insert(head3,ptr1->coeff , ptr1->expo) ;
+       ptr1=ptr1->link ; 
+    }
+    while(ptr2!=NULL)
+    {
+       head3 =insert(head3,ptr2->coeff , ptr2->expo) ;
+       ptr2=ptr2->link ;
+    }
+    printf("Added polynomial is:") ;
+    print(head3) ; 
+
+}
 int main()
 {
     struct node* head1 = NULL ; 
